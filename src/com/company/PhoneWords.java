@@ -3,6 +3,8 @@ package com.company;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -15,12 +17,69 @@ import java.util.Scanner;
  * @see Word
  */
 public class PhoneWords implements PhoneWordsInterface{
-
-    /** if yes, sort the phone number, before finding its equivalent word(s)*/
-    private boolean numSorted;
-    /** if yes, sort the phone number and remove redundant digits, before finding
-     * its equivalent word(s) */
     private boolean numUniqueSorted;
+    private List<Word> wordList = new ArrayList<Word>();
+    private boolean numSorted;
+    private int NumWords;
+    static Character[][] numberToCharMap;
+    private int numIndex = 0;
+
+    private static void generateNumberToCharMap()
+    {
+        numberToCharMap = new Character[10][5];
+        numberToCharMap[0] = new Character[]{'\0'};
+        numberToCharMap[1] = new Character[]{'\0'};
+        numberToCharMap[2] = new Character[]{'a','b','c'};
+        numberToCharMap[3] = new Character[]{'d','e','f'};
+        numberToCharMap[4] = new Character[]{'g','h','i'};
+        numberToCharMap[5] = new Character[]{'j','k','l'};
+        numberToCharMap[6] = new Character[]{'m','n','o'};
+        numberToCharMap[7] = new Character[]{'p','q','r','s'};
+        numberToCharMap[8] = new Character[]{'t','u','v'};
+        numberToCharMap[9] = new Character[]{'w','x','y','z'};
+    }
+
+    public void addWord(String w) {
+        Word tempWord = new Word(w);
+        if (!isKnown(tempWord)){
+            wordList.add(tempWord);
+        }
+    }
+
+    public boolean isKnown(Word word) {
+        return wordList.contains(word);
+    }
+
+    public int getNumWords() {
+        return wordList.size();
+    }
+
+    public void setNumSorted(boolean numSortedStatus) {
+
+    }
+
+    public boolean isNumSorted() {
+        return false;
+    }
+
+    public List<String> listWords(String num) {
+        List<String> result = new ArrayList<String>();
+        int[] numbers = new int[num.length()];
+        generateNumberToCharMap()
+        for(int i=0; i<num.length(); i++) {
+            numbers[i] = Character.getNumericValue(num.charAt(i));
+        } //up to here converts num into an integer array
+
+        for (int i : numbers){
+
+        }
+
+        return result;
+    }
+
+    public String sortNum(String num) {
+        return null;
+    }
 
     /**
      * construct a new phoneWord object
@@ -28,8 +87,8 @@ public class PhoneWords implements PhoneWordsInterface{
      * @param isWordsFileProvided yes, if we need to read words from words.txt,
      * otherwise no
      */
-    public PhoneWords(boolean isWordsFileProvided) {
 
+    public PhoneWords(boolean isWordsFileProvided) {
         numSorted = false;
         numUniqueSorted=false;
         if (isWordsFileProvided) {
@@ -45,7 +104,7 @@ public class PhoneWords implements PhoneWordsInterface{
      * @param pw PhoneWords object to add words to
      */
     private static void loadDict(String name, PhoneWords pw) {
-        Scanner dictIn;                      // words file scanner
+        Scanner dictIn; // words file scanner
         // open named words file, then read & add words to pw
         try {
             dictIn = new Scanner(new File(name));
