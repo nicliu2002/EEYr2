@@ -14,7 +14,9 @@ import java.util.Scanner;
  * @version Jan 2022
  * @see
  */
-public class NewPhoneWords implements PhoneWordsInterface{
+
+
+public abstract class NewPhoneWords implements PhoneWordsInterface{
 
     /** if yes, sort the phone number, before finding its equivalent word(s)*/
     private boolean numSorted;
@@ -28,7 +30,7 @@ public class NewPhoneWords implements PhoneWordsInterface{
      * @param isWordsFileProvided yes, if we need to read words from words.txt,
      * otherwise no
      */
-    public PhoneWords(boolean isWordsFileProvided) {
+    public NewPhoneWords(boolean isWordsFileProvided) {
 
         numSorted = false;
         numUniqueSorted=false;
@@ -40,11 +42,10 @@ public class NewPhoneWords implements PhoneWordsInterface{
     /**
      * read and process all the words in the words file and add them to the
      * PhoneWords object
-     *
-     * @param name of the file being indexed
+     *  @param name of the file being indexed
      * @param pw PhoneWords object to add words to
      */
-    private static void loadDict(String name, PhoneWords pw) {
+    private static void loadDict(String name, NewPhoneWords pw) {
         Scanner dictIn;                      // words file scanner
         // open named words file, then read & add words to pw
         try {

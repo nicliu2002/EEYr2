@@ -18,17 +18,23 @@ import java.util.Scanner;
  */
 public class PhoneWords implements PhoneWordsInterface{
     private boolean numUniqueSorted;
-    private List<Word> wordList = new ArrayList<Word>();
+    private List<Word> wordList = new ArrayList<>();
+    private List<String> wordDict = new ArrayList<>();
     private boolean numSorted;
-    private int NumWords;
-    static Character[][] numberToCharMap;
+    private int numWords;
     private int numIndex = 0;
-    static final String codes[] = { " ", "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz" };
+
+    static final String[] codes
+            = { " "," ", "abc", "def",
+            "ghi", "jkl", "mno",
+            "pqr", "stu", "vwx",
+            "yz" };
 
     public void addWord(String w) {
         Word tempWord = new Word(w);
         if (!isKnown(tempWord)){
             wordList.add(tempWord);
+            wordDict.add(w);
         }
     }
 
@@ -37,7 +43,6 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public int getNumWords() {
-
         return wordList.size();
     }
 
@@ -50,8 +55,9 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public List<String> listWords(String num) {
+        List<String> matchedList = new ArrayList<>();
         if (num.length() == 0) {
-            List<String> baseRes = new ArrayList<String>();
+            ArrayList<String> baseRes = new ArrayList<>();
             baseRes.add("");
             // Return an Arraylist containing
             // empty string
@@ -60,19 +66,17 @@ public class PhoneWords implements PhoneWordsInterface{
         // First character of num
         char ch = num.charAt(0);
         // Rest of the characters of num
-        String restStr = num.substring(1);
-        List<String> prevRes = listWords(restStr);
-        List<String> Res = new ArrayList<String>();
+        String restOfString = num.substring(1);
+        List<String> prevRes = listWords(restOfString);
+        List<String> Res = new ArrayList<>();
         String code = codes[ch - '0'];
         for (String val : prevRes) {
             for (int i = 0; i < code.length(); i++) {
                 Res.add(code.charAt(i) + val);
             }
         }
-        NumWords = Res.size();
         return Res;
     }
-
 
     public String sortNum(String num) {
         return null;
