@@ -1,8 +1,14 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Word.java test");
+        sc.nextLine()
+        Word testWord = new Word();
+
     }
 }

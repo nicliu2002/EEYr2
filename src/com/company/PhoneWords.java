@@ -23,21 +23,7 @@ public class PhoneWords implements PhoneWordsInterface{
     private int NumWords;
     static Character[][] numberToCharMap;
     private int numIndex = 0;
-
-    private static void generateNumberToCharMap()
-    {
-        numberToCharMap = new Character[10][5];
-        numberToCharMap[0] = new Character[]{'\0'};
-        numberToCharMap[1] = new Character[]{'\0'};
-        numberToCharMap[2] = new Character[]{'a','b','c'};
-        numberToCharMap[3] = new Character[]{'d','e','f'};
-        numberToCharMap[4] = new Character[]{'g','h','i'};
-        numberToCharMap[5] = new Character[]{'j','k','l'};
-        numberToCharMap[6] = new Character[]{'m','n','o'};
-        numberToCharMap[7] = new Character[]{'p','q','r','s'};
-        numberToCharMap[8] = new Character[]{'t','u','v'};
-        numberToCharMap[9] = new Character[]{'w','x','y','z'};
-    }
+    static final String codes[] = { " ", "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz" };
 
     public void addWord(String w) {
         Word tempWord = new Word(w);
@@ -51,6 +37,7 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public int getNumWords() {
+
         return wordList.size();
     }
 
@@ -63,19 +50,29 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public List<String> listWords(String num) {
-        List<String> result = new ArrayList<String>();
-        int[] numbers = new int[num.length()];
-        generateNumberToCharMap()
-        for(int i=0; i<num.length(); i++) {
-            numbers[i] = Character.getNumericValue(num.charAt(i));
-        } //up to here converts num into an integer array
-
-        for (int i : numbers){
-
+        if (num.length() == 0) {
+            List<String> baseRes = new ArrayList<String>();
+            baseRes.add("");
+            // Return an Arraylist containing
+            // empty string
+            return baseRes;
         }
-
-        return result;
+        // First character of num
+        char ch = num.charAt(0);
+        // Rest of the characters of num
+        String restStr = num.substring(1);
+        List<String> prevRes = listWords(restStr);
+        List<String> Res = new ArrayList<String>();
+        String code = codes[ch - '0'];
+        for (String val : prevRes) {
+            for (int i = 0; i < code.length(); i++) {
+                Res.add(code.charAt(i) + val);
+            }
+        }
+        NumWords = Res.size();
+        return Res;
     }
+
 
     public String sortNum(String num) {
         return null;
