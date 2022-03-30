@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.*;
+
 
 /**
  * Given a collection of words, you can convert any word to its equivalent phone
@@ -22,13 +24,11 @@ public class PhoneWords implements PhoneWordsInterface{
     private List<String> wordDict = new ArrayList<>();
     private boolean numSorted;
     private int numWords;
-    private int numIndex = 0;
 
-    static final String[] codes
-            = { " "," ", "abc", "def",
+    static final String[] codes //numpad for listAllWords to seek
+            = {" "," ", "abc", "def",
             "ghi", "jkl", "mno",
-            "pqr", "stu", "vwx",
-            "yz" };
+            "pqrs", "tuv", "wxyz"};
 
     public void addWord(String w) {
         Word tempWord = new Word(w);
@@ -46,28 +46,40 @@ public class PhoneWords implements PhoneWordsInterface{
         return wordList.size();
     }
 
-    public void setNumSorted(boolean numSortedStatus) {
-
+    public void setNumSorted(boolean numSortedStatus){
+        numSorted = numSortedStatus;
     }
 
     public boolean isNumSorted() {
-        return false;
+        return numSorted;
+    }
+    public String checkNum(String rawNum) throws IllegalArgumentException {
+        boolean isNumber;
+        Pattern ptrn = Pattern.compile("^(\\+?\\(61\\)|\\(\\+?61\\)|\\+?61|\\(0[1-9]\\)|0[1-9])?( ?-?[0-9]){7,9}$"); //regex pattern for all Australian numbers
+        Matcher match = ptrn.matcher(rawNum);
+        if (match.find() && match.group().equals(rawNum)) { //if statement, if number fits within regex constraints will run
+            rawNum = rawNum.replaceAll("\\s", "");
+            rawNum = rawNum.replace("(", "");
+            rawNum = rawNum.replace(")", "");
+            rawNum = rawNum.replace("+", "00");
+        } else {
+            throw new IllegalArgumentException("not a valid number");
+        }
+        return rawNum; //returns the "adjusted number" (no spaces, actual phone number, no brackets)
     }
 
-    public List<String> listWords(String num) {
-        List<String> matchedList = new ArrayList<>();
-        if (num.length() == 0) {
+    public List<String> listAllWords(String number) {
+        String goodNum = checkNum(number);
+        if (goodNum.length() == 0) {
             ArrayList<String> baseRes = new ArrayList<>();
             baseRes.add("");
-            // Return an Arraylist containing
-            // empty string
-            return baseRes;
+            return baseRes; //if theres nothing there returns an empty list (error handling)
         }
         // First character of num
-        char ch = num.charAt(0);
+        char ch = goodNum.charAt(0);
         // Rest of the characters of num
-        String restOfString = num.substring(1);
-        List<String> prevRes = listWords(restOfString);
+        String restOfString = goodNum.substring(1);
+        List<String> prevRes = listAllWords(restOfString); //backtracking to handle n length of number
         List<String> Res = new ArrayList<>();
         String code = codes[ch - '0'];
         for (String val : prevRes) {
@@ -76,6 +88,17 @@ public class PhoneWords implements PhoneWordsInterface{
             }
         }
         return Res;
+    }
+    public List<String> listWords(String num) { //actual listWords function that takes listAllWords output to avoid an issue with backtracking
+        List<String> unSorted = listAllWords(num);
+        List<String> result = new ArrayList<>();
+        for (String i : unSorted){
+            if (wordDict.contains(i)){ //only outputs words from words.txt or added words
+                result.add(i);
+                numWords++;
+            }
+        }
+        return result;
     }
 
     public String sortNum(String num) {
