@@ -44,6 +44,6 @@ public class Word implements WordInterface {
         return wordToNumber;
     }
     public String toString(){
-        return "to string"; //figure out what im meant to put in here
+        return word; //returns word to a string for easy use in other functions
     }
 }

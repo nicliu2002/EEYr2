@@ -8,7 +8,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         PhoneWords pw = new PhoneWords(true);
         System.out.println("Enter a number for listWords");
-        System.out.println(pw.listWords("222"));
+        System.out.println(pw.listWords("0404568696"));
         /*System.out.println("Word.java test");
         Word testWord = new Word(sc.nextLine()); //make new word object and test all functions
         System.out.println(".getWord returns: " + testWord.getWord());

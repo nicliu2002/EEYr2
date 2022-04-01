@@ -24,6 +24,8 @@ public class PhoneWords implements PhoneWordsInterface{
     private List<String> wordDict = new ArrayList<>();
     private boolean numSorted;
     private int numWords;
+    private boolean firstTime = true; //solves backtracking issues with checknum
+    private String goodNum;
 
     static final String[] codes //numpad for listAllWords to seek
             = {" "," ", "abc", "def",
@@ -67,9 +69,15 @@ public class PhoneWords implements PhoneWordsInterface{
         }
         return rawNum; //returns the "adjusted number" (no spaces, actual phone number, no brackets)
     }
-
     public List<String> listAllWords(String number) {
-        String goodNum = checkNum(number);
+        if (firstTime) {
+            goodNum = checkNum(number);
+            firstTime = false;
+        } else {
+            goodNum = number;
+        }
+        System.out.println(goodNum);
+        assert goodNum != null; //solves null pointer exception
         if (goodNum.length() == 0) {
             ArrayList<String> baseRes = new ArrayList<>();
             baseRes.add("");
@@ -98,6 +106,7 @@ public class PhoneWords implements PhoneWordsInterface{
                 numWords++;
             }
         }
+        firstTime = true;
         return result;
     }
 
@@ -145,7 +154,7 @@ public class PhoneWords implements PhoneWordsInterface{
         catch (FileNotFoundException fnfe) {
             System.err.println("Error opening words file: " + fnfe);
             System.exit(100);
-        } catch (IOException e) {
+        } catch (IOException e) { //this is in the code but the exception caused by this is already caught?
             System.err.println("Error reading words file: " + e);
             System.exit(100);
         }
