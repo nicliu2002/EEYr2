@@ -3,9 +3,7 @@ package com.company;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.*;
 
 
@@ -71,6 +69,9 @@ public class PhoneWords implements PhoneWordsInterface{
         return rawNum; //returns the "adjusted number" (no spaces, actual phone number, no brackets)
     }
     public List<String> listAllWords(String number) {
+        if (!numSorted){
+            return null;
+        }
         if (firstTime) {
             goodNum = checkNum(number);
             functionLength = number.length();
@@ -117,8 +118,14 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public String sortNum(String num) {
-        String result = num;
-        return result;
+        char[] sortArray = num.toCharArray();
+        int [] numberArray = new int[num.length()];
+        for(int i = 0; i<sortArray.length; i++) {
+            numberArray[i] = Integer.parseInt(String.valueOf(sortArray[i]));//using streams here cuts down on loops and is a lot more concise
+        }
+        Arrays.sort(numberArray);
+        numSorted = true;
+        return (Arrays.toString(numberArray).replaceAll("\\[|\\]|,|\\s", "")); //regex to delete all the other "bits" of the array.toString
     }
 
     /**

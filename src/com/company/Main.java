@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         PhoneWords pw = new PhoneWords(true);
-        System.out.println("Enter a number for listWords");
+        System.out.println("Enter a number for listWords" + pw.sortNum("98751239"));
         pw.addWord("town");
         System.out.println(pw.listWords("0404568696"));
         /*System.out.println("Word.java test");
