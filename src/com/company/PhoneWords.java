@@ -33,7 +33,7 @@ public class PhoneWords implements PhoneWordsInterface{
             "ghi", "jkl", "mno",
             "pqrs", "tuv", "wxyz"};
 
-    public void addWord(String w) {
+    public void addWord(String w) { //change this one
         Word tempWord = new Word(w);
         if (!isKnown(tempWord)){
             wordList.add(tempWord);
@@ -41,22 +41,22 @@ public class PhoneWords implements PhoneWordsInterface{
         }
     }
 
-    public boolean isKnown(Word word) {
+    public boolean isKnown(Word word) { //change this one
         return wordList.contains(word);
     }
 
-    public int getNumWords() {
+    public int getNumWords() { //change this one
         return wordList.size();
     }
 
-    public void setNumSorted(boolean numSortedStatus){
+    public void setNumSorted(boolean numSortedStatus){ //change this one
         numSorted = numSortedStatus;
     }
 
-    public boolean isNumSorted() {
+    public boolean isNumSorted() { //change this one
         return numSorted;
     }
-    public String checkNum(String rawNum) throws IllegalArgumentException {
+    public String checkNum(String rawNum) throws IllegalArgumentException { //change this one
         boolean isNumber;
         Pattern ptrn = Pattern.compile("^(\\+?\\(61\\)|\\(\\+?61\\)|\\+?61|\\(0[1-9]\\)|0[1-9])?( ?-?[0-9]){7,9}$"); //regex pattern for all Australian numbers
         Matcher match = ptrn.matcher(rawNum);
@@ -70,7 +70,7 @@ public class PhoneWords implements PhoneWordsInterface{
         }
         return rawNum; //returns the "adjusted number" (no spaces, actual phone number, no brackets)
     }
-    public List<String> listAllWords(String number) {
+    public List<String> listAllWords(String number) { //change this one
         if (firstTime) {
             goodNum = checkNum(number);
             functionLength = number.length();
