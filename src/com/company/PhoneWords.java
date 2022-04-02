@@ -26,9 +26,10 @@ public class PhoneWords implements PhoneWordsInterface{
     private int numWords;
     private boolean firstTime = true; //solves backtracking issues with checknum
     private String goodNum;
-
+    private int functionLength;
+    private List<String> unsortedWordList = new ArrayList<>();
     static final String[] codes //numpad for listAllWords to seek
-            = {" "," ", "abc", "def",
+            = {"","", "abc", "def",
             "ghi", "jkl", "mno",
             "pqrs", "tuv", "wxyz"};
 
@@ -72,16 +73,16 @@ public class PhoneWords implements PhoneWordsInterface{
     public List<String> listAllWords(String number) {
         if (firstTime) {
             goodNum = checkNum(number);
+            functionLength = number.length();
             firstTime = false;
         } else {
             goodNum = number;
         }
-        System.out.println(goodNum);
         assert goodNum != null; //solves null pointer exception
         if (goodNum.length() == 0) {
             ArrayList<String> baseRes = new ArrayList<>();
             baseRes.add("");
-            return baseRes; //if theres nothing there returns an empty list (error handling)
+            return baseRes; //if there's nothing there returns an empty list (error handling)
         }
         // First character of num
         char ch = goodNum.charAt(0);
@@ -94,6 +95,11 @@ public class PhoneWords implements PhoneWordsInterface{
             for (int i = 0; i < code.length(); i++) {
                 Res.add(code.charAt(i) + val);
             }
+        }
+        unsortedWordList.addAll(Res);
+        functionLength--; //uses this to add to the list
+        if (functionLength == 0){
+            return unsortedWordList;
         }
         return Res;
     }
