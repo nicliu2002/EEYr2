@@ -117,7 +117,8 @@ public class PhoneWords implements PhoneWordsInterface{
     }
 
     public String sortNum(String num) {
-        return null;
+        String result = num;
+        return result;
     }
 
     /**
