@@ -6,8 +6,8 @@ import java.util.List;
  * this is an interface that holds the basic methods needed to implement the
  * PhoneWords class
  *
- * @author Saber Elsayed
- * @version Jan 2022
+ * @author Nicholas Liu
+ * @version April 2022
  */
 public interface PhoneWordsInterface {
 

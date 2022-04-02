@@ -3,27 +3,18 @@ package com.company;
 import java.util.Scanner;
 
 public class Main {
-
+    /** a series of print statements demonstrating each function */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         PhoneWords pw = new PhoneWords(true);
-        System.out.println("Enter a number for listWords" + pw.sortNum("98751239"));
-        pw.addWord("town");
-        System.out.println(pw.listWords("0404568696"));
-        /*System.out.println("Word.java test");
-        Word testWord = new Word(sc.nextLine()); //make new word object and test all functions
-        System.out.println(".getWord returns: " + testWord.getWord());
-        testWord.setWord("test");
-        System.out.println(".getWord returns: " + testWord.getWord());
-        testWord.setWordToNumber("test");
-        System.out.println("WordtoNumber returns: " + testWord.getWordToNumber());
-        System.out.println("To String returns: " + testWord);
+        NewPhoneWords npw = new NewPhoneWords(true);
+        Word testWord = new Word("cat");
+        System.out.println("getDigit\t" + testWord.getDigit('B'));
+        System.out.println("getNumWords\t" + pw.getNumWords());
+        System.out.println("isKnown (false), second one will be true \t" + pw.isKnown(testWord) + "\n");
+        pw.addWord("cat");
+        System.out.println(pw.isKnown(testWord));
+        System.out.println("listWords, s \n"+ pw.listWords("823"));
+        System.out.println("listWords for new code (using hashmap) \t" + npw.listWords("823"));
 
-        System.out.println("PhoneWords.java test");
-        PhoneWords pw = new PhoneWords(true);
-        System.out.println("Word to add to phonewords? ");
-        pw.addWord(sc.nextLine());
-        System.out.println("Enter a number for listWords");
-        System.out.println(pw.listWords(sc.nextLine())); */
     }
 }

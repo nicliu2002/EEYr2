@@ -4,8 +4,8 @@ package com.company;
  *
  * this is an interface that holds all methods needed to implement the Word class
  *
- * @author Saber Elsayed
- * @version Jan 2022
+ * @author Nicholas Liu
+ * @version April 2022
  */
 public interface WordInterface {
 
@@ -26,7 +26,7 @@ public interface WordInterface {
     /**
      * converts a letter to its phone digit equivalent (see the picture provided
      * on page 1). This method works only on a digit or alphanumeric letter,
-     * i.e., “\” is not a correct letter to get its digit. You could choose to
+     * i.e., is not a correct letter to get its digit. You could choose to
      * do this just with code, or supported by a suitable helper table.
      *
      * @param letter is of type char
